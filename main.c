@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 const int WIDTH = 204;
-const int HEIGHT = 63;
+const int HEIGHT = 62;
 
 int* create_array() {
     int* arr = calloc(WIDTH * HEIGHT, sizeof(int));
@@ -37,7 +37,8 @@ int num_neighbours(int* board, int idx) {
     for (int i = 0; i < 8; i++) {
         int n_index = idx + coords[i];
 
-        if (n_index >= 0 && n_index < WIDTH * HEIGHT) {
+        if (n_index >= 0 && n_index < WIDTH * HEIGHT &&
+            abs((n_index % WIDTH) - (idx % WIDTH)) <= 1) {
             if (board[n_index]) {
                 n++;
             }
@@ -77,7 +78,7 @@ int* apply_generation(int* board) {
 void print_board(int* board) {
     for (int i = 0; i < WIDTH * HEIGHT; i++) {
         if (board[i]) {
-            printf("%d", board[i]);
+            printf("#");
         } else {
             printf(" ");
         }
@@ -105,11 +106,11 @@ int main(void) {
     seed(board);
     board = apply_generation(board);
 
-    for (int g = 0; g < 100; g++) {
+    while (1) {
         board = apply_generation(board);
         print_board(board);
 
-        sleep(1);
+        usleep(100000);
         system("clear");
     }
 
