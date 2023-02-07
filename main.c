@@ -103,8 +103,6 @@ int main(void) {
     WIDTH = w.ws_col;
     HEIGHT = w.ws_row - 1;
 
-    printf("%d %d", WIDTH, HEIGHT);
-
     time_t t;
     int n;
     int* board;
