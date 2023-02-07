@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/ioctl.h>
 #include <time.h>
 #include <unistd.h>
 
-const int WIDTH = 204;
-const int HEIGHT = 62;
+int WIDTH;
+int HEIGHT;
 
 int* create_array() {
     int* arr = calloc(WIDTH * HEIGHT, sizeof(int));
@@ -96,6 +97,14 @@ void seed(int* board) {
 }
 
 int main(void) {
+    struct winsize w;
+    ioctl(0, TIOCGWINSZ, &w);
+
+    WIDTH = w.ws_col;
+    HEIGHT = w.ws_row - 1;
+
+    printf("%d %d", WIDTH, HEIGHT);
+
     time_t t;
     int n;
     int* board;
