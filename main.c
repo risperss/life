@@ -52,10 +52,7 @@ int num_neighbours(int* board, int idx) {
 int should_live(int* board, int idx) {
     int n = num_neighbours(board, idx);
 
-    if (board[idx] && (n == 2 || n == 3)) {
-        return 1;
-    }
-    if (!board[idx] && n == 3) {
+    if ((board[idx] && (n == 2 || n == 3)) || (!board[idx] && n == 3)) {
         return 1;
     }
 
